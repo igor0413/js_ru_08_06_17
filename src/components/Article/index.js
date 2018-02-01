@@ -3,80 +3,86 @@ import {findDOMNode} from 'react-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import CommentList from '../CommentList'
-import { CSSTransitionGroup } from 'react-transition-group'
-import {deleteArticle} from '../../AC'
+import {CSSTransitionGroup} from 'react-transition-group'
+import {deleteArticle, loadArticle} from '../../AC'
 import './style.css'
+import Loader from '../Loader'
 
 class Article extends PureComponent {
-    static propTypes = {
-        article: PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            text: PropTypes.string
-        }).isRequired,
-        isOpen: PropTypes.bool,
-        toggleOpen: PropTypes.func
-    }
+  static propTypes = {
+    article: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      text: PropTypes.string
+    }).isRequired,
+    isOpen: PropTypes.bool,
+    toggleOpen: PropTypes.func
+  }
 
-    state = {
-        updateIndex: 0
-    }
+  state = {
+    updateIndex: 0
+  }
 
-/*
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.isOpen !== this.props.isOpen
-    }
-*/
+  componentWillReceiveProps({isOpen, loadArticle, article}) {
+    if (isOpen && !article.text && !article.loading) loadArticle(article.id)
+  }
 
-    render() {
-        const {article, isOpen, toggleOpen} = this.props
-        return (
-            <div ref = {this.setContainerRef}>
-                <h3>{article.title}</h3>
-                <button onClick = {toggleOpen}>
-                    {isOpen ? 'close' : 'open'}
-                </button>
-                <button onClick = {this.handleDelete}>delete me</button>
-                <CSSTransitionGroup
-                    transitionName = 'article'
-                    transitionAppear
-                    transitionEnterTimeout = {300}
-                    transitionLeaveTimeout = {500}
-                    transitionAppearTimeout = {500}
-                    component = 'div'
-                >
-                    {this.getBody()}
-                </CSSTransitionGroup>
-            </div>
-        )
-    }
+  /*
+      shouldComponentUpdate(nextProps, nextState) {
+          return nextProps.isOpen !== this.props.isOpen
+      }
+  */
 
-    handleDelete = () => {
-        const {deleteArticle, article} = this.props
-        deleteArticle(article.id)
-        console.log('---', 'deleting article')
-    }
+  render() {
+    const {article, isOpen, toggleOpen} = this.props
+    return (
+      <div ref={this.setContainerRef}>
+        <h3>{article.title}</h3>
+        <button onClick={toggleOpen}>
+          {isOpen ? 'close' : 'open'}
+        </button>
+        <button onClick={this.handleDelete}>delete me</button>
+        <CSSTransitionGroup
+          transitionName='article'
+          transitionAppear
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={500}
+          transitionAppearTimeout={500}
+          component='div'
+        >
+          {this.getBody()}
+        </CSSTransitionGroup>
+      </div>
+    )
+  }
 
-    setContainerRef = ref => {
-        this.container = ref
+  handleDelete = () => {
+    const {deleteArticle, article} = this.props
+    deleteArticle(article.id)
+    console.log('---', 'deleting article')
+  }
+
+  setContainerRef = ref => {
+    this.container = ref
 //        console.log('---', ref)
-    }
+  }
 
-    getBody() {
-        const {article, isOpen} = this.props
-        if (!isOpen) return null
-        return (
-            <section>
-               {article.text}
-                <button onClick = {() => this.setState({updateIndex: this.state.updateIndex + 1})}>update</button>
-               <CommentList article = {article} ref = {this.setCommentsRef} key = {this.state.updateIndex}/>
-            </section>
-        )
-    }
+  getBody() {
+    const {article, isOpen} = this.props
+    if (!isOpen) return null
+    if (article.loading) return <Loader/>
+      return (
+        <section>
+          {article.text}
+          <button onClick={() => this.setState({updateIndex: this.state.updateIndex + 1})}>update</button>
+          <CommentList article={article} ref={this.setCommentsRef} key={this.state.updateIndex}/>
+        </section>
+      )
+  }
 
-    setCommentsRef = ref => {
+  setCommentsRef = ref => {
 //        console.log('---', ref)
-    }
+  }
 }
 
-export default connect(null, { deleteArticle })(Article)
+export default connect(null, {deleteArticle, loadArticle})(Article)
