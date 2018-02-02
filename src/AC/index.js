@@ -5,6 +5,7 @@ import {
   CHANGE_SELECTION,
   ADD_COMMENT,
   LOAD_ALL_ARTICLES,
+  LOAD_ARTICLE_COMMENTS,
   LOAD_ARTICLE, START, SUCCESS, FAIL
 } from '../constants'
 
@@ -46,7 +47,7 @@ export function addComment(comment, articleId) {
 export function loadAllArticles() {
   return {
     type: LOAD_ALL_ARTICLES,
-    callApi: '/api/article'
+    callAPI: '/api/article'
   }
 }
 
@@ -69,4 +70,12 @@ export function loadArticle(id) {
         }))
     }, 1000)
   })
+}
+
+export function loadArticleComments(articleId) {
+  return {
+    type: LOAD_ARTICLE_COMMENTS,
+    payload: { articleId },
+    callAPI: `/api/comment?article=${articleId}`
+  }
 }
