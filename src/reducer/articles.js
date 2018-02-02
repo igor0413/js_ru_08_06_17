@@ -1,7 +1,7 @@
 import {normalizedArticles as defaultArticles} from '../fixtures'
 import {arrToMap} from '../helpers'
 import {DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE_COMMENTS, START, SUCCESS, LOAD_ARTICLE} from '../constants'
-import {OrderedMap, Map, Record} from 'immutable'
+import {OrderedMap, Record} from 'immutable'
 
 const ArticleRecord = Record({
   text: undefined,
@@ -12,7 +12,6 @@ const ArticleRecord = Record({
   commentsLoading: false,
   commentsLoaded: false
 })
-
 
 const ReducerState = Record({
   loading: false,

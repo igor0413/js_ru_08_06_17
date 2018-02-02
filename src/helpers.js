@@ -7,4 +7,3 @@ export function arrToMap(arr, DataRecord = Map) {
 export function mapToArr(obj) {
   return obj.valueSeq().toArray()
 }
-

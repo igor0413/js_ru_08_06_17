@@ -1,8 +1,6 @@
-import {normalizedComments as defaulComments} from '../fixtures'
 import {
   ADD_COMMENT,
   LOAD_ARTICLE_COMMENTS,
-  START,
   SUCCESS} from '../constants'
 import {arrToMap} from '../helpers'
 import {OrderedMap, Record} from "immutable"
@@ -23,7 +21,7 @@ export default (commentsState = defaultState, action) => {
   const {type, payload, response, randomId} = action
   switch (type) {
     case ADD_COMMENT:
-      return {...commentsState, [randomId]: payload.comment}
+      return commentsState.setIn(['entities', randomId], new CommentRecord({...payload.comment, id: randomId}))
 
     case LOAD_ARTICLE_COMMENTS + SUCCESS:
       return commentsState.update('entities', entities => entities.merge(arrToMap(response, CommentRecord)))
