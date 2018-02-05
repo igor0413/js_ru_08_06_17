@@ -5,6 +5,7 @@ import UserForm from './UserForm'
 import Filters from './Filters'
 import Counter from './Counter'
 import 'react-select/dist/react-select.css'
+import Articles from './routes/Articles'
 import {HashRouter as Router, Route, NavLink} from 'react-router-dom'
 
 class App extends Component {
@@ -17,7 +18,7 @@ class App extends Component {
           <Router>
             <div>
               <div>
-                <h2>Main Menu</h2>
+                <h2>Main menu</h2>
                 <div><NavLink activeStyle={{color:'red'}} to='/counter'>Counter</NavLink></div>
                 <div><NavLink activeStyle={{color:'red'}} to='/filters'>Filters</NavLink></div>
                 <div><NavLink activeStyle={{color:'red'}} to='/articles'>Articles</NavLink></div>
@@ -25,7 +26,7 @@ class App extends Component {
               <UserForm />
               <Route path='/counter' component={Counter}/>
               <Route path='/filters' component={Filters}/>
-              <Route path='/articles' component={ArticleList}/>
+              <Route path='/articles' component={Articles}/>
             </div>
           </Router>
         )

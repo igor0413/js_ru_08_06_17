@@ -33,7 +33,6 @@ CommentList.propTypes = {
   toggleOpen: PropTypes.func
 }
 
-
 function getBody({article: {comments = [], id, commentsLoaded, commentsLoading}, isOpen}) {
   if (!isOpen) return null
   if (commentsLoading) return <Loader/>
