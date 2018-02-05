@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 import CommentList from '../CommentList'
 import {CSSTransitionGroup} from 'react-transition-group'
 import {deleteArticle, loadArticle} from '../../AC'
-import './style.css'
 import Loader from '../Loader'
+import './style.css'
 
 class Article extends PureComponent {
   static propTypes = {
@@ -22,10 +22,12 @@ class Article extends PureComponent {
   }
 
   state = {
-    updateIndex: 0
+    updateIndex: 0,
+    areCommentsOpen: false
   }
 
   componentDidMount() {
+    const {loadArticle, article, id} = this.props
     if (!article || (!article.text && !article.loading)) loadArticle(id)
   }
 
