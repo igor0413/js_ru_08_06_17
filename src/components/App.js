@@ -4,6 +4,7 @@ import Filters from './Filters'
 import Counter from './Counter'
 import NotFound from './routes/NotFound'
 import NewArticle from './routes/NewArticle'
+import CommentsPage from './routes/CommentsPage'
 import 'react-select/dist/react-select.css'
 import Articles from './routes/Articles'
 import {BrowserRouter as Router, Switch, Route, NavLink} from 'react-router-dom'
@@ -30,6 +31,7 @@ class App extends Component {
                 <Route path='/filters' component={Filters}/>
                 <Route path ='/articles/new' component = {NewArticle} />
                 <Route path='/articles' component={Articles}/>
+                <Route path='/comments/:page' component={CommentsPage}/>
                 <Route path='*' component={NotFound}/>
               </Switch>
             </div>
