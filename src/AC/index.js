@@ -9,6 +9,7 @@ import {
   LOAD_COMMENTS_FOR_PAGE,
   LOAD_ARTICLE, START, SUCCESS, FAIL
 } from '../constants'
+import {push, replace} from 'react-router-redux'
 
 export function increment() {
   return {
@@ -60,18 +61,28 @@ export function loadArticle(id) {
     })
     setTimeout(() => {
       fetch(`/api/article/${id}`)
-        .then(res => res.json())
+        .then(res => {
+          console.log('example response ---', res)
+          if(res.status >= 400) {
+            throw Error(res.statusText)
+          }
+          return res.json()
+        })
         .then(response => dispatch({
           type: LOAD_ARTICLE + SUCCESS,
           payload: {id, response}
         }))
-        .catch(error => dispatch({
-          type: LOAD_ARTICLE + FAIL,
-          payload: {id, error}
-        }))
+        .catch(error => {
+          dispatch({
+            type: LOAD_ARTICLE + FAIL,
+            payload: {id, error}
+          })
+          dispatch(replace('/error'))
+        })
     }, 1000)
   })
 }
+
 
 export function loadArticleComments(articleId) {
   return {
