@@ -7,17 +7,18 @@ import NewArticle from './routes/NewArticle'
 import CommentsPage from './routes/CommentsPage'
 import 'react-select/dist/react-select.css'
 import Articles from './routes/Articles'
-import {BrowserRouter as Router, Switch, Route, Redirect, NavLink} from 'react-router-dom'
+import {Switch, Route, Redirect, NavLink} from 'react-router-dom'
+import {ConnectedRouter} from 'react-router-redux'
+import history from '../history'
 
 class App extends Component {
     static propTypes = {
 
     };
 
-
     render() {
         return (
-          <Router>
+          <ConnectedRouter history={history}>
             <div>
               <div>
                 <h2>Main menu</h2>
@@ -36,7 +37,7 @@ class App extends Component {
                 <Route path='*' component={NotFound}/>
               </Switch>
             </div>
-          </Router>
+          </ConnectedRouter>
         )
     }
 }
