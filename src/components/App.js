@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import UserForm from './UserForm'
 import Filters from './Filters'
 import Counter from './Counter'
@@ -16,6 +17,20 @@ class App extends Component {
 
     };
 
+    static childContextTypes = {
+      user: PropTypes.string
+    }
+
+    getChildContext() {
+      return {
+        user: this.state.username
+      }
+    }
+
+  state = {
+    username: ''
+  }
+
     render() {
         return (
           <ConnectedRouter history={history}>
@@ -26,7 +41,7 @@ class App extends Component {
                 <div><NavLink activeStyle={{color:'red'}} to='/filters'>Filters</NavLink></div>
                 <div><NavLink activeStyle={{color:'red'}} to='/articles'>Articles</NavLink></div>
               </div>
-              <UserForm />
+              <UserForm value={this.state.username} onChange={this.handleUserChange}/>
               <Switch>
                 <Route path='/counter' component={Counter}/>
                 <Route path='/filters' component={Filters}/>
@@ -40,6 +55,9 @@ class App extends Component {
           </ConnectedRouter>
         )
     }
+
+  handleUserChange = (username) => this.setState({username})
+
 }
 
 export default App

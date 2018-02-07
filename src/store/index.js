@@ -7,7 +7,7 @@ import thunk from 'redux-thunk'
 import {routerMiddleware} from 'react-router-redux'
 import history from '../history'
 
-const enhancer = applyMiddleware(thunk, routerMiddleware(history), randomId, api, logger);
+const enhancer = applyMiddleware(thunk, routerMiddleware(history), randomId, api/*, logger*/);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, {}, composeEnhancers(enhancer))
 
