@@ -7,6 +7,7 @@ import {CSSTransitionGroup} from 'react-transition-group'
 import {deleteArticle, loadArticle} from '../../AC'
 import Loader from '../Loader'
 import './style.css'
+import LocalizedText from '../LocalizedText'
 
 class Article extends Component {
   static propTypes = {
@@ -46,7 +47,7 @@ class Article extends Component {
         <button onClick={toggleOpen}>
           {isOpen ? 'close' : 'open'}
         </button>
-        <button onClick={this.handleDelete}>delete me</button>
+        <button onClick={this.handleDelete}><LocalizedText>delete me</LocalizedText></button>
         <CSSTransitionGroup
           transitionName='article'
           transitionAppear

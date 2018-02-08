@@ -6,6 +6,7 @@ import toggleOpen from '../decorators/toggleOpen'
 import {connect} from 'react-redux'
 import {loadArticleComments} from '../AC'
 import Loader from "./Loader";
+import LocalizedText from './LocalizedText'
 
 class CommentList extends Component {
   static contextTypes = {
@@ -27,7 +28,7 @@ class CommentList extends Component {
     return (
       <div>
         <h3>User: {this.context.user}</h3>
-        <button onClick={toggleOpen}>{text}</button>
+        <button onClick={toggleOpen}><LocalizedText>{text}</LocalizedText></button>
         {getBody({article, isOpen})}
       </div>
     )
